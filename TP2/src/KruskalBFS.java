@@ -10,14 +10,16 @@ public class KruskalBFS {
 		g.agregarArista(0, 4);
 		g.agregarArista(2, 3);
 		
-		Grafo g2 = new Grafo(5);
+		Grafo g2 = new Grafo(7);
 		g2.agregarArista(0, 1);
 		g2.agregarArista(0, 2);
 		g2.agregarArista(1, 3);
 		g2.agregarArista(2, 4);
 		g2.agregarArista(1, 4);
 		
-		Util.esConexa(g2);
+		g2.agregarArista(5, 6);
+		
+		Util.esConexo( g);
 	}
 	
 	

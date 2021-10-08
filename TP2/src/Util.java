@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import grafos.Grafo;
@@ -8,34 +9,37 @@ import grafos.Grafo;
 public class Util {
 
 	
-	public static boolean esConexa(Grafo g) {
+	public static boolean esConexo(Grafo g) {
 	
-		if(g == null) 
+    	if(g == null) 
 			throw new IllegalArgumentException("es null");
 	   
 		if(g.tamano() == 0)
 			throw new IllegalArgumentException("El grafo no tiene vertices");
 		
 		
-		Set<Integer> pendientes = new HashSet<>();
+		Set<Integer> pendientes = new HashSet<>(); // lista de pendientes
+		pendientes.add(0);// marcamos uno arbritario
 		
+		Iterator<Integer> vertices = pendientes.iterator();
 		ArrayList<Integer> marcados = new ArrayList<Integer>();
-		
-		for(int vertice = 0; vertice <  g.tamano(); vertice ++) {   
-					
-					Set<Integer> listaVecinos = g.vecinos(vertice);
-		
-						marcados.add(vertice);
-						
-						for(int vecino : listaVecinos) {
-							
-							if(!marcados.contains(vecino))
-								pendientes.add(vecino);
-							
-						}
-				
-		}               
-		          System.out.println(pendientes.size());                                 
+
+		while(vertices.hasNext()) {
+			
+			int vertice = vertices.next();
+			
+			marcados.add(vertice);
+			vertices.remove(); // eliminamos el pendiente 
+			
+			Set<Integer> listaVecinos = g.vecinos(vertice);
+			for(int vecino : listaVecinos) {
+			 if(!marcados.contains(vecino)) // no agregamos uno ya marcado
+				pendientes.add(vecino); 
+			}
+			vertices = pendientes.iterator(); // actualizar lista
+		}
+		System.out.println(marcados.size());  
+                              
 		return false;
 		
 	}
