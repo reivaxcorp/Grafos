@@ -6,7 +6,7 @@ import java.util.Set;
 
 import grafos.Grafo;
 
-public class Util {
+public class UtilGrafos {
 
 	
 	public static boolean esConexo(Grafo g) {
@@ -29,7 +29,7 @@ public class Util {
 			int vertice = vertices.next();
 			
 			marcados.add(vertice);
-			vertices.remove(); // eliminamos el pendiente 
+			vertices.remove(); // lo sacamos de la lista de pendientes
 			
 			Set<Integer> listaVecinos = g.vecinos(vertice);
 			for(int vecino : listaVecinos) {
@@ -37,10 +37,9 @@ public class Util {
 				pendientes.add(vecino); 
 			}
 			vertices = pendientes.iterator(); // actualizar lista
-		}
-		System.out.println(marcados.size());  
-                              
-		return false;
+		}        
+		
+		return g.tamano() == marcados.size();
 		
 	}
 	
