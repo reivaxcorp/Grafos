@@ -13,7 +13,7 @@ public class Grafo
 	{
 		A = new boolean[vertices][vertices];
 	}
-	
+
 	// Agregado de aristas
 	public void agregarArista(int i, int j)
 	{
@@ -58,8 +58,9 @@ public class Grafo
 		verificarVertice(i);
 		
 		Set<Integer> ret = new HashSet<Integer>();
-		for(int j = 0; j < this.tamano(); ++j) if( i != j )
-		{
+		for(int j = 0; j < this.tamano(); ++j) 
+		
+		if( i != j ){
 			if( this.existeArista(i,j) )
 				ret.add(j);
 		}
@@ -82,5 +83,11 @@ public class Grafo
 	{
 		if( i == j )
 			throw new IllegalArgumentException("No se permiten loops: (" + i + ", " + j + ")");
+	}
+	
+	
+	public boolean[][] getGrafo() {
+		boolean[][] grafo = A.clone();
+		return grafo;
 	}
 }
