@@ -40,6 +40,17 @@ public class UtilGrafos {
 		
 	}
 	
+	/**
+	 * Kruskal
+	 * @param g
+	 * @param verticePartida
+	 * @return
+	 */
+	public Grafo generarArbolMinimo(Grafo g, int verticePartida) {
+		
+		return null;
+	}
+	
 //	public static int distanciaDFS(Grafo g, int verticeInicial, int verticeFinal ) {
 //
 //		if(g == null) 

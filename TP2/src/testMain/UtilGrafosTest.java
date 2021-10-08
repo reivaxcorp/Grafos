@@ -31,6 +31,13 @@ public class UtilGrafosTest {
 
 	}
 	
+	
+	@Test
+	public void arbolGeneradorMinimo() {
+		
+	}
+	
+	
 //	@Test
 //	public void distanciaDFSTest() {
 //		Grafo g = new Grafo(5);
