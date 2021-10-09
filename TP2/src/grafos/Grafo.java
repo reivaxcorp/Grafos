@@ -1,17 +1,27 @@
 package grafos;
 
+
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
+
+import com.ibm.icu.text.DecimalFormat;
+import com.ibm.icu.text.DecimalFormatSymbols;
 
 public class Grafo
 {
 	// Representamos el grafo por su matriz de adyacencia
 	private boolean[][] A;
+	// Peso de las Aristas
+	private HashMap<String, Float> pesoAristas;
+	
 	
 	// La cantidad de vertices esta predeterminada desde el constructor
 	public Grafo(int vertices)
 	{
 		A = new boolean[vertices][vertices];
+	    pesoAristas = new HashMap<>();
 	}
 
 	// Agregado de aristas
@@ -23,6 +33,19 @@ public class Grafo
 
 		A[i][j] = true;
 		A[j][i] = true;
+		pesoAristas.put(""+i+j+j+i,  UtilGrafos.obtenerPesoAleatorio()); // entre 0 y 1
+	}
+	
+	public float obtenerPesoArista(int i, int j) {
+		verificarVertice(i);
+		verificarVertice(j);
+		verificarDistintos(i, j);
+		
+		if(pesoAristas.get(""+i+j+j+i) != null) {
+			return pesoAristas.get(""+i+j+j+i);
+		}else {
+			return -1;
+		}
 	}
 	
 	// Eliminacion de aristas
@@ -90,4 +113,6 @@ public class Grafo
 		boolean[][] grafo = A.clone();
 		return grafo;
 	}
+	
+
 }

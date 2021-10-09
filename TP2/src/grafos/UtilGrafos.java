@@ -3,20 +3,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
+
+import com.ibm.icu.text.DecimalFormat;
+import com.ibm.icu.text.DecimalFormatSymbols;
 
 import grafos.Grafo;
 
 public class UtilGrafos {
 
 	
-	public static boolean esConexo(Grafo g) {
+	public static boolean esConexo(Grafo g, int verticePartida) {
 	
     	if(g == null) 
 			throw new IllegalArgumentException("es null");
 	   
 		Set<Integer> pendientes = new HashSet<>(); // lista de pendientes
-		pendientes.add(0);// marcamos primero
+		pendientes.add(verticePartida);// marcamos primero
 		
 		Iterator<Integer> vertices = pendientes.iterator();
 		ArrayList<Integer> marcados = new ArrayList<Integer>();
@@ -95,4 +99,20 @@ public class UtilGrafos {
 ////		}
 //		return distancia;
 //	}
+	
+	public static float obtenerPesoAleatorio() {
+		Random rd = new Random();
+		DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
+		simbolos.setDecimalSeparator('.');
+		DecimalFormat truncar = new DecimalFormat("##.#", simbolos);
+		int min = 0;
+		int max = 1;
+		float numeroAleatorio = min + rd.nextFloat() * (max - min);
+		float num = Float.parseFloat(truncar.format(numeroAleatorio));
+		return  num;
+	}
+	
+	public void dameAristaMasBarata(Grafo g) {
+		
+	}
 }
