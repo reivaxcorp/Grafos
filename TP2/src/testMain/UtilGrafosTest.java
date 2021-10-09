@@ -33,6 +33,7 @@ public class UtilGrafosTest {
 	
 	@Test(expected = IllegalArgumentException.class) 
 	public void obtenerPesoArista() {
+		
 		Grafo g = new Grafo(5);
 		g.agregarArista(1, 0);
 		g.agregarArista(0, 4);
