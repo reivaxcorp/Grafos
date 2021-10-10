@@ -3,11 +3,8 @@ package grafos;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
-import com.ibm.icu.text.DecimalFormat;
-import com.ibm.icu.text.DecimalFormatSymbols;
 
 public class Grafo
 {
@@ -30,10 +27,22 @@ public class Grafo
 		verificarVertice(i);
 		verificarVertice(j);
 		verificarDistintos(i, j);
-
+		agregarPesoArista(i, j, UtilGrafos.obtenerPesoAleatorio());
+		
 		A[i][j] = true;
 		A[j][i] = true;
-		pesoAristas.put(""+i+j+j+i,  UtilGrafos.obtenerPesoAleatorio()); // entre 0 y 1
+		
+	}
+	
+	public void agregarPesoArista(int i, int j, float peso) {
+		
+		if(peso >= 0 && peso <= 1) { 
+			pesoAristas.put(""+i+j, peso); // entre 0 y 1
+			pesoAristas.put(""+j+i, peso); // agregamos en los dos sentidos el peso
+		} else {
+			throw new IllegalArgumentException("El peso de la arista debe estar entre 0 y 1");
+		}
+		
 	}
 	
 	public float obtenerPesoArista(int i, int j) {
@@ -41,10 +50,10 @@ public class Grafo
 		verificarVertice(j);
 		verificarDistintos(i, j);
 		
-		if(pesoAristas.get(""+i+j+j+i) != null) {
-			return pesoAristas.get(""+i+j+j+i);
+		if(pesoAristas.get(""+i+j) != null) {
+			return pesoAristas.get(""+i+j);
 		}else {
-			return -1;
+			return 2.0f; // no existen arista validas de peso superior a 2.0f
 		}
 	}
 	
