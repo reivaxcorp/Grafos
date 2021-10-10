@@ -19,14 +19,18 @@ public class UtilGrafosTest {
 		g.agregarArista(1, 0);
 		g.agregarArista(0, 4);
 		g.agregarArista(2, 3);
-		Grafo g2 = new Grafo(7);
+		Grafo g2 = new Grafo(5);
 		g2.agregarArista(0, 1);
 		g2.agregarArista(0, 2);
 		g2.agregarArista(1, 3);
-		g2.agregarArista(2, 4);
+		g2.agregarArista(1, 0);
 		g2.agregarArista(1, 4);
-		g2.agregarArista(1, 5);
-		g2.agregarArista(1, 6);
+		g2.agregarArista(3, 1);
+		g2.agregarArista(3, 4);
+		g2.agregarArista(4, 3);
+		g2.agregarArista(4, 1);
+		g2.agregarArista(4, 2);
+		
 		Grafo g3= new Grafo(7);
 		
 		assertFalse(UtilGrafos.esConexo(g, 0));
@@ -80,7 +84,11 @@ public class UtilGrafosTest {
 		g.agregarPesoArista(2, 3, 0.4f);
 		
 		
-		UtilGrafos.dameAristaDeMenorPesoBFS(g, g );
+		HashMap<Integer, Integer> minimoActual = new HashMap<Integer, Integer>();
+		minimoActual.put(0, 1);
+		
+		assertEquals(minimoActual, UtilGrafos.dameAristaDeMenorPesoBFS(g));
+		
 	}
 	
 	@Test

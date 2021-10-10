@@ -46,6 +46,7 @@ public class UtilGrafos {
 
 	public static HashMap<Integer, Set<Integer>> dameVecinosVertice(Grafo g) {
 		
+		  // el vertice y su conjunto de vecinos
 		  HashMap<Integer, Set<Integer>> vecinosList = new HashMap<>();
 		  Set<Integer> vecinosYaAniadidos = new HashSet<Integer>();
 		  
@@ -66,32 +67,29 @@ public class UtilGrafos {
 	      return vecinosList;
 	}
 	
-    public static Set<Integer> dameAristaDeMenorPesoBFS(Grafo g, Grafo arbol) {
+    public static HashMap<Integer, Integer> dameAristaDeMenorPesoBFS(Grafo g) {
 	
       /**
        * Donde el primer valor del Hashmap Integer, representa nuestro vertice del grafo, 
        * y el set seran los vecinos	
        */
       HashMap<Integer, Set<Integer>> vecinosList = dameVecinosVertice(g);
-      HashMap<Integer, Set<Integer>> vecinosListArbol = dameVecinosVertice(arbol);
       
-      
-//      Set<Integer> minimoActual = new HashSet<Integer>();
+      HashMap<Integer, Integer> minimoActual = new HashMap<Integer, Integer>();
       int verticeMinimo = 0; 
       int verticeVecinoMinimo = 0;
       float  pesoMinimo = 2.0f; // no exite arista de peso superior a 1. 2.0f es un buen numero para comparar 
-  
+      
       
       for (int vertice = 0; vertice < vecinosList.size(); vertice++) {
-    	   
-    	  
     		  for(int vecino : vecinosList.get(vertice)) {
-    			  
-    			  	
+  
     			  if(g.existeArista(vertice, vecino)) {
 //    	  			  System.out.println(""+vertice+ " " +vecino);
 
     				  float pesoArista = g.obtenerPesoArista(vertice, vecino);
+    				  if(pesoArista == 2.0f)
+    					  throw new IllegalArgumentException("La arista no tiene peso "); 
 //    				  System.out.println(pesoArista);
     				  if(pesoArista < pesoMinimo) {
     					 pesoMinimo  = pesoArista;
@@ -99,13 +97,10 @@ public class UtilGrafos {
     					 verticeVecinoMinimo = vecino;
     				  }
     			  }
-    		  	
     	  }
-
       }
-      
-      System.out.println(pesoMinimo);
-      return null;
+      minimoActual.put(verticeMinimo, verticeVecinoMinimo);
+      return minimoActual;
     	
 	}
 	

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class Grafo
+public class Grafo implements Cloneable
 {
 	// Representamos el grafo por su matriz de adyacencia
 	private boolean[][] A;
@@ -27,7 +27,6 @@ public class Grafo
 		verificarVertice(i);
 		verificarVertice(j);
 		verificarDistintos(i, j);
-		agregarPesoArista(i, j, UtilGrafos.obtenerPesoAleatorio());
 		
 		A[i][j] = true;
 		A[j][i] = true;
@@ -123,5 +122,11 @@ public class Grafo
 		return grafo;
 	}
 	
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 
 }
