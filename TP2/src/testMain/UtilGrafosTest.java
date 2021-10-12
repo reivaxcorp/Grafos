@@ -113,4 +113,9 @@ public class UtilGrafosTest {
 		assertEquals(vecinosList.get(2), segundoVertice); 
 		
 	}
+	
+	@Test
+	public void obtenerGrafoAleatorioTest() {
+		UtilGrafos.obtenerGrafoAleatorio();
+	}
 }

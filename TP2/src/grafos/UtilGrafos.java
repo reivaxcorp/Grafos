@@ -154,14 +154,18 @@ public class UtilGrafos {
 	
 	public static Grafo obtenerGrafoAleatorio() {
 		int cantidadVertices = obtenerNumeroAleatorioEntero(4, 20); // vertices entre 4 y 20
+		System.out.println("cantidadVertices "+cantidadVertices);
 		Grafo g = new Grafo(cantidadVertices);
-		
-		Set<Integer> aristas = new HashSet<Integer>();
+		System.out.println("tamanio grafo "+g.tamano());
+
 		
 		for(int vertice = 0; vertice < cantidadVertices; vertice ++) {
-			int aristaAleatoria = obtenerNumeroAleatorioEntero(vertice, cantidadVertices);
-			
+			int verticeAleatorio = obtenerAristaAleatoriaValida(vertice, cantidadVertices);
+			g.agregarArista(vertice, verticeAleatorio);
+			System.out.println("vertice seleccionado aleatorio para: " +vertice+ " es: " +verticeAleatorio);
 		}
+		
+		System.out.println("es conexo? " + UtilGrafos.esConexo(g, 4));
 		
 		return null;
 	}
@@ -177,13 +181,14 @@ public class UtilGrafos {
 		}
 		
 		Random numeroAleatorio = new Random();
-		int numero= 0 + numeroAleatorio.nextInt() * (verticesValidos.size() - 0);
+		int numero= numeroAleatorio.nextInt(verticesValidos.size());
 		
 		return verticesValidos.get(numero);
 	}
+	
 	private static int obtenerNumeroAleatorioEntero(int min, int max) {
 		Random numeroAleatorio = new Random();
-		int numero= min + numeroAleatorio.nextInt() * (max - min);
+		int numero= min + (numeroAleatorio.nextInt(max - min));
 		return numero;
 	}
 }
