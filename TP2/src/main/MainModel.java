@@ -10,8 +10,6 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import grafos.Grafo;
-import grafos.UtilGrafos;
 
 public class MainModel implements KeyListener{
 	

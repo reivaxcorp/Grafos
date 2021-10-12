@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import grafos.Grafo;
+import main.Grafo;
 
 public class ConsultaDeVecinosTest
 {

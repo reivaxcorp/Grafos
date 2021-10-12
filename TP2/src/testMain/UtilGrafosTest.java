@@ -7,9 +7,9 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import grafos.Grafo;
-import grafos.UtilGrafos;
+import main.Grafo;
 import main.KruskalBFS;
+import main.UtilGrafos;
 
 public class UtilGrafosTest {
 

@@ -1,4 +1,4 @@
-package grafos;
+package main;
 
 
 import java.util.HashMap;

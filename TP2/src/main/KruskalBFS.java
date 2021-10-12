@@ -2,8 +2,6 @@ package main;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
-import grafos.UtilGrafos;
-import grafos.Grafo;
 
 public class KruskalBFS {
 

@@ -6,9 +6,10 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 import org.junit.Test;
-import grafos.Grafo;
-import grafos.UtilGrafos;
+
+import main.Grafo;
 import main.KruskalUnionFind;
+import main.UtilGrafos;
 
 public class KruskalUnionFindTest {
 

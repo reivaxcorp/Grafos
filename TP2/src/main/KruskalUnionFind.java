@@ -7,9 +7,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import grafos.Grafo;
-import grafos.UtilGrafos;
-
 public class KruskalUnionFind {
 
 	
