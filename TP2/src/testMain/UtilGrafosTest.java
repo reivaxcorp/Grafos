@@ -115,13 +115,8 @@ public class UtilGrafosTest {
 	}
 	
 	
-	@Test
-	public void obtenerGrafoAleatorioTestFallo() {
-		
-	}
-	
 	@Test(expected = IllegalArgumentException.class)
-	public void obtenerGrafoAleatorioTest() {
+	public void obtenerGrafoAleatorioFaildTest() {
 		
 		for(int i = 0; i < 30; i++)
 			assertTrue(UtilGrafos.esConexo(UtilGrafos.obtenerGrafoAleatorio(4, 2), 0));

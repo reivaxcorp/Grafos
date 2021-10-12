@@ -117,11 +117,6 @@ public class Grafo implements Cloneable
 	}
 	
 	
-	public boolean[][] getGrafo() {
-		boolean[][] grafo = A.clone();
-		return grafo;
-	}
-	
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
