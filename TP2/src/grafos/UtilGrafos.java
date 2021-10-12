@@ -159,51 +159,43 @@ public class UtilGrafos {
 	
 	/**
 	 * 
-	 * @param verticeMin el numero de vertice minimo
-	 * @param verticeMax el numero de vertice maximo
+	 * @param cantidadVertices el numero de vertice minimo
+	 * @param cantidadAritas el numero de aristas maximo
 	 * @return
 	 */
-	public static Grafo obtenerGrafoAleatorio(int verticeMin, int verticeMax) {
-		int cantidadVertices = obtenerNumeroAleatorioEntero(verticeMin, verticeMax); // vertices entre 4 y 20
-//		System.out.println("cantidadVertices "+cantidadVertices);
+	public static Grafo obtenerGrafoAleatorio(int cantidadVertices, int cantidadAristas) {
+		
+		if(!(cantidadAristas >= cantidadVertices -1))
+			throw new IllegalArgumentException("cantidad de aristas debe ser mayor o igual a cantidad vertices menos uno");
+
 		Grafo g = new Grafo(cantidadVertices);
 //		System.out.println("tamanio grafo "+g.tamano());
 
-		conexar(g);
+		conexar(g); // lo hacemos conexo
 		
-		ArrayList<Integer> verticesDisponibles = new ArrayList<>();
-		for(int vertice = 0; vertice < cantidadVertices; vertice ++) {
-			verticesDisponibles.add(vertice);
-		}
-		 
-		for(int vertice = 0; vertice < cantidadVertices; vertice ++) {
-			int verticeAleatorio = obtenerAristaAleatoriaValida(vertice, cantidadVertices);
-			g.agregarArista(vertice, verticeAleatorio);
-			g.agregarPesoArista(vertice, verticeAleatorio, UtilGrafos.obtenerPesoAleatorio());
-//			System.out.println("vertice seleccionado aleatorio para: " +vertice+ " es: " +verticeAleatorio);
-		}
+		int aristaIndex = 0;
+		int verticeIndex = 0;
 		
-//		System.out.println("es conexo? " + UtilGrafos.esConexo(g, 0));
-		
+		// descontamos las aristas de el metodo conexo (cantidadVertices -1)
+		while(aristaIndex < cantidadAristas - (cantidadVertices -1)) {
+			
+			if(verticeIndex < cantidadVertices) {
+
+				int verticeAleatorio = obtenerAristaAleatoriaValida(verticeIndex, cantidadVertices);
+				g.agregarArista(verticeIndex, verticeAleatorio);
+				g.agregarPesoArista(verticeIndex, verticeAleatorio, UtilGrafos.obtenerPesoAleatorio());
+//			System.out.println("vertice seleccionado aleatorio para: " +verticeIndex+ " es: " +verticeAleatorio);
+				aristaIndex ++;
+				verticeIndex ++;
+ 
+			} else {
+				verticeIndex = 0;
+			}
+			
+		}		
 		return g;
 	}
-	
-	// conexamos aleatoreamente a todas las aristas, luego agregamos aleatoriamente mas. 
-	private static Grafo conexar(Grafo g) {
-		Grafo grafoConexo = g;
-		Random generarPadreRandom = new Random();
-		int padre = generarPadreRandom.nextInt(g.tamano());
-		
-		for(int vertice = 0; vertice < grafoConexo.tamano(); vertice ++) {
-			
-			if(vertice != padre) {
-				grafoConexo.agregarArista(padre, vertice);
-				grafoConexo.agregarPesoArista(padre, vertice, UtilGrafos.obtenerPesoAleatorio());
-			}
-		}
-		return grafoConexo;
-	}
-	
+
 	private static int obtenerAristaAleatoriaValida(int verticeActual, int cantidadVertices) {
 		
 		ArrayList<Integer> verticesValidos = new ArrayList<Integer>();
@@ -218,14 +210,25 @@ public class UtilGrafos {
 //		for(int vertices: verticesValidos)
 //			System.out.println(vertices);
 		Random numeroAleatorio = new Random();
-		int numero= numeroAleatorio.nextInt(verticesValidos.size());
+		int numero = numeroAleatorio.nextInt(verticesValidos.size());
 		
 		return verticesValidos.get(numero);
 	}
 	
-	private static int obtenerNumeroAleatorioEntero(int min, int max) {
-		Random numeroAleatorio = new Random();
-		int numero= min + (numeroAleatorio.nextInt(max - min));
-		return numero;
-	}
+	// conexamos aleatoreamente a todas las aristas, luego agregamos aleatoriamente mas. 
+	// la cantidad de aristas es V -1
+		private static Grafo conexar(Grafo g) {
+			Grafo grafoConexo = g;
+			Random generarPadreRandom = new Random();
+			int padre = generarPadreRandom.nextInt(g.tamano());
+			for(int vertice = 0; vertice < grafoConexo.tamano(); vertice ++) {
+				
+				if(vertice != padre) {
+					grafoConexo.agregarArista(padre, vertice);
+					grafoConexo.agregarPesoArista(padre, vertice, UtilGrafos.obtenerPesoAleatorio());
+				}
+			}
+			return grafoConexo;
+		}
+
 }
