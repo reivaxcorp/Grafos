@@ -21,7 +21,7 @@ public class KruskalBFSTest {
 	 */
 	
 	@Test
-	public void generarArbolMinimo() {
+	public void generarArbolMinimoBFS() {
 		
         KruskalBFS kbfs = new KruskalBFS();
         
@@ -43,15 +43,15 @@ public class KruskalBFSTest {
 
 	
 		 
- 		Grafo arbol = kbfs.arbolGeneradorMinimo(g);
+ 		Grafo arbol = kbfs.arbolGeneradorMinimoBFS(g);
  		
  		// donde el primero es el vertice y el set son sus vecinos
-		HashMap<Integer, Set<Integer>> arbolGeneradorVecinos = UtilGrafos.dameVecinosVertice(arbol);
+		/*HashMap<Integer, Set<Integer>> arbolGeneradorVecinos = UtilGrafos.dameVecinosVertice(arbol);
 		for(Entry<Integer, Set<Integer>> vertice : arbolGeneradorVecinos.entrySet()) {
 			for(int vecinos: vertice.getValue()) {
 				System.out.println("vertice " + vertice.getKey() + " vecinos " + vecinos );
 			}
-		}
+		}*/
  		
  		assertTrue(arbol.existeArista(0, 1));
  		assertTrue(arbol.existeArista(0, 2));
@@ -61,4 +61,6 @@ public class KruskalBFSTest {
  		assertFalse(arbol.existeArista(1, 3)); // forman ciclos
  		assertFalse(arbol.existeArista(1, 4)); // forman ciclos
 	}
+	
+	
 }

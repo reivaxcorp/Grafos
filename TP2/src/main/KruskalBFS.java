@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,7 +14,7 @@ public class KruskalBFS {
 
 
 	
-	public Grafo arbolGeneradorMinimo(Grafo g) {
+	public Grafo arbolGeneradorMinimoBFS(Grafo g) {
 		
 		if(g == null) 
 			throw new IllegalArgumentException("el grafo es null");
@@ -31,7 +32,7 @@ public class KruskalBFS {
 			copiaGrafo = (Grafo) g.clone();  
 			// la catidad de aristas esa menos uno con la cantidad de vertices.
 			// el index 0 de nuestro grafo es el primer vertice
-			while(verticeActual < g.tamano()) {
+			while(verticeActual < g.tamano() -1) {
 				
 				// retorna un par de vertices, el vertice y el vecino de menor peso
 				HashMap<Integer, Integer> aristaMenor = UtilGrafos.dameAristaDeMenorPesoBFS(copiaGrafo); 
@@ -64,7 +65,5 @@ public class KruskalBFS {
 		
 		return arbolGeneradorMinimo; 
 	}
-	
-	
 	
 }

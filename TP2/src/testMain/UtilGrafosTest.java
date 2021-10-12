@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import grafos.Grafo;
 import grafos.UtilGrafos;
+import main.KruskalBFS;
 
 public class UtilGrafosTest {
 
@@ -57,7 +58,7 @@ public class UtilGrafosTest {
 	
 	
 	@Test
-	public void formaCircuitoTest() {
+	public void formaCircuitoTestBFS() {
 		
 		Grafo g = new Grafo(5);
 		g.agregarArista(1, 0);

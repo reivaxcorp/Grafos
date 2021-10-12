@@ -9,7 +9,6 @@ import java.util.Set;
 import com.ibm.icu.text.DecimalFormat;
 import com.ibm.icu.text.DecimalFormatSymbols;
 
-import grafos.Grafo;
 
 public class UtilGrafos {
 
@@ -104,6 +103,13 @@ public class UtilGrafos {
     	
 	}
 	
+    /**
+	 *  
+	 * @param g es el arbol que estamos generando
+	 * @param verticePartida es el vertice donde comenzamos a inicializar el recorrido de vecinos
+	 * @param verticeFinal si no forma circuito entonces, lo podemos agregar. 
+	 * @return retorna verdadero si hay circuito de lo contrario, retorna falso.
+	 */
     // el vertice final es el que sera la arista selecionada que no forma circuito
     public static boolean formaCircuito(Grafo g, int verticePartida, int verticeFinal) {
     	
@@ -130,10 +136,9 @@ public class UtilGrafos {
 			}
 			vertices = pendientes.iterator(); // actualizar lista
 		}        
-	
-    	return marcados.contains(verticeFinal);
+		// si es True, estan en la misma componente conexa, de lo contrario no. 
+    	return marcados.contains(verticeFinal); 
     }
-    
     
 	public static float obtenerPesoAleatorio() {
 		Random rd = new Random();
@@ -147,5 +152,38 @@ public class UtilGrafos {
 		return  num;
 	}
 	
-	
+	public static Grafo obtenerGrafoAleatorio() {
+		int cantidadVertices = obtenerNumeroAleatorioEntero(4, 20); // vertices entre 4 y 20
+		Grafo g = new Grafo(cantidadVertices);
+		
+		Set<Integer> aristas = new HashSet<Integer>();
+		
+		for(int vertice = 0; vertice < cantidadVertices; vertice ++) {
+			int aristaAleatoria = obtenerNumeroAleatorioEntero(vertice, cantidadVertices);
+			
+		}
+		
+		return null;
+	}
+	private static int obtenerAristaAleatoriaValida(int verticeActual, int totalVertices) {
+		
+		ArrayList<Integer> verticesValidos = new ArrayList<Integer>();
+		
+		for(int vertice = verticeActual + 1; vertice < totalVertices; vertice ++ ) {
+			verticesValidos.add(vertice);
+		} 
+		for(int vertice = verticeActual - 1; vertice > 0; vertice -- ) {
+			verticesValidos.add(vertice);
+		}
+		
+		Random numeroAleatorio = new Random();
+		int numero= 0 + numeroAleatorio.nextInt() * (verticesValidos.size() - 0);
+		
+		return verticesValidos.get(numero);
+	}
+	private static int obtenerNumeroAleatorioEntero(int min, int max) {
+		Random numeroAleatorio = new Random();
+		int numero= min + numeroAleatorio.nextInt() * (max - min);
+		return numero;
+	}
 }
