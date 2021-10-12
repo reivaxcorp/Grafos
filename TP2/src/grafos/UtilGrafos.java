@@ -171,7 +171,7 @@ public class UtilGrafos {
 		Grafo g = new Grafo(cantidadVertices);
 //		System.out.println("tamanio grafo "+g.tamano());
 
-		conexar(g); // lo hacemos conexo
+    	conexar(g); // lo hacemos conexo
 		
 		int aristaIndex = 0;
 		int verticeIndex = 0;

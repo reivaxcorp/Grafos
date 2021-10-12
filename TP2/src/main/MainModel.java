@@ -10,7 +10,6 @@ import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import grafos.Grafo;
 import grafos.UtilGrafos;
 
@@ -35,6 +34,9 @@ public class MainModel implements KeyListener{
 	private JTextField textFieldCantidadAristas;
 	private JTextField textFieldCantidadGrafos;
 	
+	private JLabel resultadoKruskalBFS;
+	private JLabel resultadoKruscalUnionFind;
+
 	private KruskalBFS kruskalBFS;
 	private KruskalUnionFind kruskalUnionFind;
 	
@@ -56,6 +58,9 @@ public class MainModel implements KeyListener{
 		this.textFieldCantidadAristas = textFieldCantidadAristas;
 		this.textFieldCantidadGrafos = textFieldCantidadGrafos;
 		
+		this.resultadoKruskalBFS = resultadoKruskalBFS;
+		this.resultadoKruscalUnionFind = resultadoKruscalUnionFind;
+
 		this.kruskalBFS = new KruskalBFS();
 		this.kruskalUnionFind = new KruskalUnionFind();
 		
@@ -75,12 +80,12 @@ public class MainModel implements KeyListener{
 						 MAX_VERTICES_ALEATORIOS_POR_DEFECTO
 						);
 				int aristasRandom = obtenerNumeroAleatorioEntero(
-						MIN_ARISTA_ALEATORIOS_POR_DEFECTO,
+						verticesRandom -1,
 						MAX_ARISTA_ALEATORIOS_POR_DEFECTO
 						);
 				int grafosRandom = obtenerNumeroAleatorioEntero(
-						MIN_ARISTA_ALEATORIOS_POR_DEFECTO,
-						MAX_ARISTA_ALEATORIOS_POR_DEFECTO
+						MIN_GRAFOS_ALEATORIOS_POR_DEFECTO,
+						MAX_GRAFOS_ALEATORIOS_POR_DEFECTO
 						);
 				textFieldCantVertices.setText(String.valueOf(verticesRandom));
 				textFieldCantidadAristas.setText(String.valueOf(aristasRandom));
@@ -96,15 +101,34 @@ public class MainModel implements KeyListener{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Grafo> grafos = crearGrafosCantSeleccionada();
+				 
+				int cantVertices = Integer.valueOf(textFieldCantVertices.getText());
+				int cantAristas = Integer.valueOf(textFieldCantidadAristas.getText());
+				int cantGrafos =  Integer.valueOf(textFieldCantidadGrafos.getText());
+				
+				ArrayList<Grafo> grafoKruscalBFS = crearGrafosCantSeleccionada(cantVertices, cantAristas, cantGrafos);
+				ArrayList<Grafo> grafoKruscalUionFind = crearGrafosCantSeleccionada(cantVertices, cantAristas, cantGrafos);
+
+				
+			long tiempoNanoSegundosKruskalBFS = calcularKruskalBFS(grafoKruscalBFS);
+	        long tiempoNanoSegundosKruskalUnionFind = calcularKruskalUnionFind(grafoKruscalUionFind);
+				    mostrarResultados(tiempoNanoSegundosKruskalBFS, tiempoNanoSegundosKruskalUnionFind);
+			
+				
 			}
 
 		});
 		textFieldCantVertices.addKeyListener(this);
 	}
 
-
-	private ArrayList<Grafo> crearGrafosCantSeleccionada() {
+   
+   private void mostrarResultados(long kruskalBFS, long kruskalUnionFind) {
+	   resultadoKruskalBFS.setText(String.valueOf(kruskalBFS)  + " nanosegundos");
+	   resultadoKruscalUnionFind.setText(String.valueOf(kruskalUnionFind) + " nanosegundos");
+   }
+   
+	private ArrayList<Grafo> crearGrafosCantSeleccionada(int cantVertices, int cantAristas, int cantGrafos) {
+	
 		ArrayList<Grafo> grafos = new ArrayList<Grafo>();
 		for(int cant = 0; cant < cantGrafos; cant ++) {
 			grafos.add(UtilGrafos.obtenerGrafoAleatorio(cantVertices, cantAristas));
@@ -112,13 +136,43 @@ public class MainModel implements KeyListener{
 		return grafos;
 	}
 	
-	private int calcularKruskalBFS(ArrayList<Grafo> grafos) {
+	private long calcularKruskalBFS(ArrayList<Grafo> grafos) {
 		
-		return 0;
+		ArrayList<Long> tiempo = new ArrayList<Long>();
+		
+		for (int g = 0; g < grafos.size(); g++) {
+			long start = System.nanoTime();
+			kruskalBFS.arbolGeneradorMinimoBFS(grafos.get(g));
+			long end = System.nanoTime();
+			tiempo.add(end-start);
+			
+		}
+		long tiempoTotal = 0;
+		
+		for (int i = 0; i < tiempo.size(); i++) {
+			tiempoTotal += tiempo.get(i);
+		}
+		return tiempoTotal;
 	}
 	
-    private int calcularKruskalUnionFind(ArrayList<Grafo> grafos) {
-    	return 0;
+    private long calcularKruskalUnionFind(ArrayList<Grafo> grafos) {
+		
+
+		ArrayList<Long> tiempo = new ArrayList<Long>();
+		
+		for (int g = 0; g < grafos.size(); g++) {
+			long start = System.nanoTime();
+			kruskalUnionFind.arbolGeneradorMinimoUnionFind(grafos.get(g));
+			long end = System.nanoTime();
+			tiempo.add(end-start);
+			
+		}
+		long tiempoTotal = 0;
+		
+		for (int i = 0; i < tiempo.size(); i++) {
+			tiempoTotal += tiempo.get(i);
+		}
+		return tiempoTotal;
 	}
 
 	private int obtenerNumeroAleatorioEntero(int min, int max) {

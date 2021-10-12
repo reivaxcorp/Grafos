@@ -17,7 +17,7 @@ public class KruskalUnionFind {
 		
 		if(g == null) 
 			throw new IllegalArgumentException("el grafo es null");
-//		
+
 		if(UtilGrafos.esConexo(g, 0) == false)
 			throw new IllegalArgumentException("el grafo no es conexo");
 		

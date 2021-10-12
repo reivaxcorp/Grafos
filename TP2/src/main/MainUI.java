@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 
 public class MainUI {
 
-	private JFrame frame;
+	private JFrame frmArbolGeneradorMinimo;
 	private JTextField textFieldCantVertices;
 	private JTextField textFieldCantidadAristas;
 	private JTextField textFieldCantidadGrafos;
@@ -22,7 +22,7 @@ public class MainUI {
 			public void run() {
 				try {
 					MainUI window = new MainUI();
-					window.frame.setVisible(true);
+					window.frmArbolGeneradorMinimo.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -41,83 +41,84 @@ public class MainUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmArbolGeneradorMinimo = new JFrame();
+		frmArbolGeneradorMinimo.setTitle("Arbol Generador Minimo");
+		frmArbolGeneradorMinimo.setBounds(100, 100, 450, 300);
+		frmArbolGeneradorMinimo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmArbolGeneradorMinimo.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Kruskal BFS");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel.setBounds(63, 208, 82, 14);
-		frame.getContentPane().add(lblNewLabel);
+		frmArbolGeneradorMinimo.getContentPane().add(lblNewLabel);
 		
 		JLabel lblKruskalUnionFind = new JLabel("Kruskal Union Find");
 		lblKruskalUnionFind.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblKruskalUnionFind.setBounds(249, 208, 128, 14);
-		frame.getContentPane().add(lblKruskalUnionFind);
+		frmArbolGeneradorMinimo.getContentPane().add(lblKruskalUnionFind);
 		
 
 		JLabel lblNewLabel_1 = new JLabel("Tiempos de ejecution del Algoritmo \r\nde Kruskal");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNewLabel_1.setBounds(48, 11, 329, 14);
-		frame.getContentPane().add(lblNewLabel_1);
+		frmArbolGeneradorMinimo.getContentPane().add(lblNewLabel_1);
 		
 
 		JLabel lblNewLabel_2 = new JLabel("Cantidad Vertices");
 		lblNewLabel_2.setBounds(72, 98, 127, 17);
-		frame.getContentPane().add(lblNewLabel_2);
+		frmArbolGeneradorMinimo.getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("Cantidad Aristas");
 		lblNewLabel_2_1.setBounds(72, 125, 127, 17);
-		frame.getContentPane().add(lblNewLabel_2_1);
+		frmArbolGeneradorMinimo.getContentPane().add(lblNewLabel_2_1);
 		
 		JLabel labelTiempoKruskal = new JLabel("");
 		labelTiempoKruskal.setBounds(83, 98, 46, 14);
-		frame.getContentPane().add(labelTiempoKruskal);
+		frmArbolGeneradorMinimo.getContentPane().add(labelTiempoKruskal);
 		
 		JLabel labelTiempoUnionFind = new JLabel("");
 		labelTiempoUnionFind.setBounds(277, 98, 46, 14);
-		frame.getContentPane().add(labelTiempoUnionFind);
+		frmArbolGeneradorMinimo.getContentPane().add(labelTiempoUnionFind);
 		
 		
 		JButton btnComparar = new JButton("Comparar");
 		btnComparar.setBounds(148, 166, 112, 20);
-		frame.getContentPane().add(btnComparar);
+		frmArbolGeneradorMinimo.getContentPane().add(btnComparar);
 	
 		JButton btnRandom = new JButton("Aleatorio");
 		btnRandom.setBounds(322, 89, 89, 23);
-		frame.getContentPane().add(btnRandom);
+		frmArbolGeneradorMinimo.getContentPane().add(btnRandom);
 				
 		JLabel lblNewLabel_2_2 = new JLabel("Cantidad de Grafos");
 		lblNewLabel_2_2.setBounds(72, 70, 127, 17);
-		frame.getContentPane().add(lblNewLabel_2_2);
+		frmArbolGeneradorMinimo.getContentPane().add(lblNewLabel_2_2);
 		
 		JLabel resultadoKruskalBFS = new JLabel("");
-		resultadoKruskalBFS.setBounds(73, 233, 46, 14);
-		frame.getContentPane().add(resultadoKruskalBFS);
+		resultadoKruskalBFS.setBounds(34, 233, 133, 17);
+		frmArbolGeneradorMinimo.getContentPane().add(resultadoKruskalBFS);
 		
 		JLabel resultadoKruscalUnionFind = new JLabel("");
-		resultadoKruscalUnionFind.setBounds(277, 233, 46, 14);
-		frame.getContentPane().add(resultadoKruscalUnionFind);
+		resultadoKruscalUnionFind.setBounds(238, 233, 128, 17);
+		frmArbolGeneradorMinimo.getContentPane().add(resultadoKruscalUnionFind);
 		
 		
 		
 		textFieldCantVertices = new JTextField();
 		textFieldCantVertices.setBounds(209, 95, 86, 20);
-		frame.getContentPane().add(textFieldCantVertices);
+		frmArbolGeneradorMinimo.getContentPane().add(textFieldCantVertices);
 		textFieldCantVertices.setColumns(10);
 		
 
 		textFieldCantidadAristas = new JTextField();
 		textFieldCantidadAristas.setColumns(10);
 		textFieldCantidadAristas.setBounds(209, 122, 86, 20);
-		frame.getContentPane().add(textFieldCantidadAristas);
+		frmArbolGeneradorMinimo.getContentPane().add(textFieldCantidadAristas);
 		
 
 		textFieldCantidadGrafos = new JTextField();
 		textFieldCantidadGrafos.setColumns(10);
 		textFieldCantidadGrafos.setBounds(209, 68, 86, 20);
-		frame.getContentPane().add(textFieldCantidadGrafos);
+		frmArbolGeneradorMinimo.getContentPane().add(textFieldCantidadGrafos);
 		
 		new MainModel(
 				textFieldCantVertices, 
