@@ -12,7 +12,12 @@ import com.ibm.icu.text.DecimalFormatSymbols;
 
 public class UtilGrafos {
 
-	
+/**
+ * 	
+ * @param g grafo para verificar si es conexo.
+ * @param verticePartida un vertice de partida, usualmente cero.
+ * @return devuelve true si es conexo.
+ */
 	public static boolean esConexo(Grafo g, int verticePartida) {
 	
     	if(g == null) 
@@ -152,34 +157,66 @@ public class UtilGrafos {
 		return  num;
 	}
 	
-	public static Grafo obtenerGrafoAleatorio() {
-		int cantidadVertices = obtenerNumeroAleatorioEntero(4, 20); // vertices entre 4 y 20
-		System.out.println("cantidadVertices "+cantidadVertices);
+	/**
+	 * 
+	 * @param verticeMin el numero de vertice minimo
+	 * @param verticeMax el numero de vertice maximo
+	 * @return
+	 */
+	public static Grafo obtenerGrafoAleatorio(int verticeMin, int verticeMax) {
+		int cantidadVertices = obtenerNumeroAleatorioEntero(verticeMin, verticeMax); // vertices entre 4 y 20
+//		System.out.println("cantidadVertices "+cantidadVertices);
 		Grafo g = new Grafo(cantidadVertices);
-		System.out.println("tamanio grafo "+g.tamano());
+//		System.out.println("tamanio grafo "+g.tamano());
 
+		conexar(g);
 		
+		ArrayList<Integer> verticesDisponibles = new ArrayList<>();
+		for(int vertice = 0; vertice < cantidadVertices; vertice ++) {
+			verticesDisponibles.add(vertice);
+		}
+		 
 		for(int vertice = 0; vertice < cantidadVertices; vertice ++) {
 			int verticeAleatorio = obtenerAristaAleatoriaValida(vertice, cantidadVertices);
 			g.agregarArista(vertice, verticeAleatorio);
-			System.out.println("vertice seleccionado aleatorio para: " +vertice+ " es: " +verticeAleatorio);
+			g.agregarPesoArista(vertice, verticeAleatorio, UtilGrafos.obtenerPesoAleatorio());
+//			System.out.println("vertice seleccionado aleatorio para: " +vertice+ " es: " +verticeAleatorio);
 		}
 		
-		System.out.println("es conexo? " + UtilGrafos.esConexo(g, 4));
+//		System.out.println("es conexo? " + UtilGrafos.esConexo(g, 0));
 		
-		return null;
+		return g;
 	}
-	private static int obtenerAristaAleatoriaValida(int verticeActual, int totalVertices) {
+	
+	// conexamos aleatoreamente a todas las aristas, luego agregamos aleatoriamente mas. 
+	private static Grafo conexar(Grafo g) {
+		Grafo grafoConexo = g;
+		Random generarPadreRandom = new Random();
+		int padre = generarPadreRandom.nextInt(g.tamano());
+		
+		for(int vertice = 0; vertice < grafoConexo.tamano(); vertice ++) {
+			
+			if(vertice != padre) {
+				grafoConexo.agregarArista(padre, vertice);
+				grafoConexo.agregarPesoArista(padre, vertice, UtilGrafos.obtenerPesoAleatorio());
+			}
+		}
+		return grafoConexo;
+	}
+	
+	private static int obtenerAristaAleatoriaValida(int verticeActual, int cantidadVertices) {
 		
 		ArrayList<Integer> verticesValidos = new ArrayList<Integer>();
 		
-		for(int vertice = verticeActual + 1; vertice < totalVertices; vertice ++ ) {
+		for(int vertice = verticeActual + 1; vertice < cantidadVertices; vertice ++ ) {
 			verticesValidos.add(vertice);
 		} 
-		for(int vertice = verticeActual - 1; vertice > 0; vertice -- ) {
+		for(int vertice = verticeActual - 1; vertice >= 0; vertice -- ) {
 			verticesValidos.add(vertice);
 		}
 		
+//		for(int vertices: verticesValidos)
+//			System.out.println(vertices);
 		Random numeroAleatorio = new Random();
 		int numero= numeroAleatorio.nextInt(verticesValidos.size());
 		

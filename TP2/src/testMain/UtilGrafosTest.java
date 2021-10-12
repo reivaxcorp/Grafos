@@ -114,8 +114,13 @@ public class UtilGrafosTest {
 		
 	}
 	
+
+	
 	@Test
 	public void obtenerGrafoAleatorioTest() {
-		UtilGrafos.obtenerGrafoAleatorio();
+		
+		for(int i = 0; i < 30; i++)
+			assertTrue(UtilGrafos.esConexo(UtilGrafos.obtenerGrafoAleatorio(4, 20), 0));
 	}
+	
 }
