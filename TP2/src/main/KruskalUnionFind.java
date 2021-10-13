@@ -26,7 +26,7 @@ public class KruskalUnionFind {
 		try {
 			// iremos quitando las aristas minimas sucesivamente. 
 			copiaGrafo = (Grafo) g.clone();  
-			// la catidad de aristas esa menos uno con la cantidad de vertices.
+			// la catidad de aristas es menor uno con la cantidad de vertices.
 			// el index 0 de nuestro grafo es el primer vertice
 			while(verticeActual < g.tamano() -1) {
 				
@@ -46,7 +46,7 @@ public class KruskalUnionFind {
 	            		copiaGrafo.eliminarArista(pVertice, pVecino); // ya no necesitamos esta arista en la siguiente iteracion
 		            
 	            		unionFind(arbolGeneradorMinimo);
-
+//	            		System.out.println(UtilGrafos.esConexo(arbolGeneradorMinimo, 0)); // es conexo al finalizar el arbol generador minimo.
 	            	} else {
 	            		copiaGrafo.eliminarArista(pVertice, pVecino); // encontro una arista que forma circuito, la omitimos en la siguiente iteracion
 	            	}
@@ -73,9 +73,10 @@ public class KruskalUnionFind {
 	 */
     private static void unionFind(Grafo arbol) {
     	
+    	// el arbol se va generando por partes, si el arbol no es conexo, 
+    	// quiere decir que hay dos grupos de aristas que se podrian aniadir con union find.
        if(UtilGrafos.esConexo(arbol, 0) == false) {
 
-//    	System.out.println("ITERACION");
 //      	System.out.println("raiz "+  raiz(g, 0));
     	Set<Integer> raices = new HashSet<Integer>();
       	for(int vertice = 0; vertice < arbol.tamano(); vertice ++) {
@@ -115,20 +116,26 @@ public class KruskalUnionFind {
     	 arbol.agregarPesoArista(raizUnion[0], raizUnion[1], UtilGrafos.obtenerPesoAleatorio());
     }
     
+    /**
+     * 
+     * @param g
+     * @param vertice
+     * @return la raiz de primer grupo conexo.
+     */
 	public static int raiz(Grafo g, int vertice) {
 		
 		   Set<Integer> padre = new HashSet<Integer>();
 		   padre.add(vertice);	
 
 		   Set<Integer> listaVecinos = new HashSet<Integer>();
-		   listaVecinos.addAll(g.vecinos(vertice));
+		   listaVecinos.addAll(g.vecinos(vertice)); // los vecinos del padre 
 		   
 	       int cantVecinos = 0;
 		   while(cantVecinos < listaVecinos.size()) {
 			
 			   for(int vecino: listaVecinos) {
 				   if(!padre.contains(vecino)) {
-					   padre.add(vecino);	
+					   padre.add(vecino);	// propagacion de vertices, aniadiendo vecinos, que seran padres en esta interacion
 //					   System.out.println(vecino);
 				   }
 				   cantVecinos ++;
@@ -149,6 +156,7 @@ public class KruskalUnionFind {
 			   }
 		   }           
 		     
+		   // la raiz es el ultimo vertice de la iteracion de nuestro grupos conexo.
 		    int raiz = 0;
 		    Iterator<Integer> it = padre.iterator();
 		    while(it.hasNext()) {

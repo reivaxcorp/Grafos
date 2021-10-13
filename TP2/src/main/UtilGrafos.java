@@ -12,6 +12,7 @@ import com.ibm.icu.text.DecimalFormatSymbols;
 
 public class UtilGrafos {
 
+	private static Random rd = new Random();
 /**
  * 	
  * @param g grafo para verificar si es conexo.
@@ -146,7 +147,7 @@ public class UtilGrafos {
     }
     
 	public static float obtenerPesoAleatorio() {
-		Random rd = new Random();
+
 		DecimalFormatSymbols simbolos = new DecimalFormatSymbols();
 		simbolos.setDecimalSeparator('.');
 		DecimalFormat truncar = new DecimalFormat("##.#", simbolos);
@@ -209,8 +210,7 @@ public class UtilGrafos {
 		
 //		for(int vertices: verticesValidos)
 //			System.out.println(vertices);
-		Random numeroAleatorio = new Random();
-		int numero = numeroAleatorio.nextInt(verticesValidos.size());
+		int numero = rd.nextInt(verticesValidos.size());
 		
 		return verticesValidos.get(numero);
 	}
@@ -219,8 +219,7 @@ public class UtilGrafos {
 	// la cantidad de aristas es V -1
 		private static Grafo conexar(Grafo g) {
 			Grafo grafoConexo = g;
-			Random generarPadreRandom = new Random();
-			int padre = generarPadreRandom.nextInt(g.tamano());
+			int padre = rd.nextInt(g.tamano());
 			for(int vertice = 0; vertice < grafoConexo.tamano(); vertice ++) {
 				
 				if(vertice != padre) {
