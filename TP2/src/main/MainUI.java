@@ -6,6 +6,12 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Dimension;
 
 public class MainUI {
 
@@ -82,7 +88,7 @@ public class MainUI {
 		
 		
 		JButton btnComparar = new JButton("Comparar");
-		btnComparar.setBounds(148, 166, 112, 20);
+		btnComparar.setBounds(141, 177, 112, 20);
 		frmArbolGeneradorMinimo.getContentPane().add(btnComparar);
 	
 		JButton btnRandom = new JButton("Aleatorio");
@@ -94,11 +100,13 @@ public class MainUI {
 		frmArbolGeneradorMinimo.getContentPane().add(lblNewLabel_2_2);
 		
 		JLabel resultadoKruskalBFS = new JLabel("");
-		resultadoKruskalBFS.setBounds(34, 233, 133, 17);
+		resultadoKruskalBFS.setForeground(new Color(0, 0, 0));
+		resultadoKruskalBFS.setBounds(10, 233, 165, 17);
 		frmArbolGeneradorMinimo.getContentPane().add(resultadoKruskalBFS);
 		
 		JLabel resultadoKruscalUnionFind = new JLabel("");
-		resultadoKruscalUnionFind.setBounds(238, 233, 128, 17);
+		resultadoKruscalUnionFind.setForeground(new Color(0, 0, 0));
+		resultadoKruscalUnionFind.setBounds(238, 233, 173, 17);
 		frmArbolGeneradorMinimo.getContentPane().add(resultadoKruscalUnionFind);
 		
 		
@@ -120,6 +128,13 @@ public class MainUI {
 		textFieldCantidadGrafos.setBounds(209, 68, 86, 20);
 		frmArbolGeneradorMinimo.getContentPane().add(textFieldCantidadGrafos);
 		
+		JLabel lblLabelError = new JLabel("");
+		lblLabelError.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblLabelError.setForeground(Color.RED);
+		lblLabelError.setBounds(72, 152, 339, 14);
+		frmArbolGeneradorMinimo.getContentPane().add(lblLabelError);
+		
+		
 		new MainModel(
 				textFieldCantVertices, 
 				textFieldCantidadAristas,
@@ -127,11 +142,28 @@ public class MainUI {
 				btnRandom,
 				btnComparar,
 				resultadoKruskalBFS,
-				resultadoKruscalUnionFind
+				resultadoKruscalUnionFind,
+				lblLabelError
 				);
-
+		
+	
 		
 	}
-	
-
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }

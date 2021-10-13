@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -34,9 +36,13 @@ public class MainModel implements KeyListener{
 	
 	private JLabel resultadoKruskalBFS;
 	private JLabel resultadoKruscalUnionFind;
+	private JLabel lblLabelError;
 
+	private JButton btnComparar;
+	
 	private KruskalBFS kruskalBFS;
 	private KruskalUnionFind kruskalUnionFind;
+	private  Pattern pattern;
 	
 	public MainModel(
 			JTextField textFieldCantVertices,
@@ -45,7 +51,7 @@ public class MainModel implements KeyListener{
 			JButton btnRandom, 
 			JButton btnComparar,
 			JLabel resultadoKruskalBFS,
-			JLabel resultadoKruscalUnionFind
+			JLabel resultadoKruscalUnionFind, JLabel lblLabelError
 			) {
 		
 		this.cantVertices = MIN_VERTICES_ALEATORIOS_POR_DEFECTO;
@@ -55,6 +61,8 @@ public class MainModel implements KeyListener{
 		this.textFieldCantVertices = textFieldCantVertices;
 		this.textFieldCantidadAristas = textFieldCantidadAristas;
 		this.textFieldCantidadGrafos = textFieldCantidadGrafos;
+
+		this.btnComparar = btnComparar;
 		
 		this.resultadoKruskalBFS = resultadoKruskalBFS;
 		this.resultadoKruscalUnionFind = resultadoKruscalUnionFind;
@@ -62,12 +70,15 @@ public class MainModel implements KeyListener{
 		this.kruskalBFS = new KruskalBFS();
 		this.kruskalUnionFind = new KruskalUnionFind();
 		
+		this.lblLabelError = lblLabelError;
 		
+        this.pattern = Pattern.compile("\\D|\\s");
 
 		textFieldCantVertices.setText(String.valueOf(cantVertices));
 		textFieldCantidadAristas.setText(String.valueOf(cantAristas));
 		textFieldCantidadGrafos.setText(String.valueOf(cantGrafos));
 
+		
 		btnRandom.addActionListener(new ActionListener() {
 			
 			@Override
@@ -117,6 +128,8 @@ public class MainModel implements KeyListener{
 
 		});
 		textFieldCantVertices.addKeyListener(this);
+		textFieldCantidadAristas.addKeyListener(this);
+		textFieldCantidadGrafos.addKeyListener(this);
 	}
 
    
@@ -175,28 +188,69 @@ public class MainModel implements KeyListener{
 
 	private int obtenerNumeroAleatorioEntero(int min, int max) {
 		Random numeroAleatorio = new Random();
-		int numero= min + (numeroAleatorio.nextInt(max - min));
+		int numero= min + (numeroAleatorio.nextInt(max - min));          
 		return numero;
 	}
 
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		// no implementado
 	}
 
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		// no implementado
 	}
 
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		    Matcher matcherVertices = pattern.matcher(textFieldCantVertices.getText());
+		    Matcher matcherAristas = pattern.matcher(textFieldCantidadAristas.getText());
+		    Matcher matcherGrafo = pattern.matcher(textFieldCantidadGrafos.getText());
+		    
+		    boolean noNumeroVertices = matcherVertices.find();
+		    boolean noNumeroAristas = matcherAristas.find();
+		    boolean noNumeroGrafo = matcherGrafo.find();
+		    
+		    if(noNumeroVertices || noNumeroAristas || noNumeroGrafo) {
+		    	btnComparar.setEnabled(false);
+		    	lblLabelError.setText("Valor ingresado invalido, solo numeros");
+		    } else if (!noNumeroVertices && !noNumeroAristas && !noNumeroGrafo) {
+		    	btnComparar.setEnabled(true);
+		    	lblLabelError.setText("");
+		    }
+		    if(textFieldCantVertices.getText().isEmpty() || textFieldCantidadAristas.getText().isEmpty() || textFieldCantidadGrafos.getText().isEmpty()) {
+		    	btnComparar.setEnabled(false);
+		    	lblLabelError.setText("Ingrese un valor");
+		    } 
+		    
+		    if(!noNumeroVertices &&
+		       !noNumeroAristas &&
+		       !noNumeroGrafo &&
+		       !textFieldCantVertices.getText().isEmpty() &&
+		       !textFieldCantidadAristas.getText().isEmpty() &&
+		       (Integer.valueOf(textFieldCantidadAristas.getText()) <  
+		        Integer.valueOf(textFieldCantVertices.getText()) -1)) {
+		    	btnComparar.setEnabled(false);
+		    	lblLabelError.setText("Arista debe ser superior a vertice -1");
+		    }
+		    
+		    if(!noNumeroVertices &&
+			   !noNumeroAristas &&
+			   !noNumeroGrafo &&
+		       !textFieldCantVertices.getText().isEmpty() &&
+		       !textFieldCantidadAristas.getText().isEmpty() &&
+		       !textFieldCantidadGrafos.getText().isEmpty()) {
+		    	
+			    if( Integer.valueOf(textFieldCantidadAristas.getText()) != MIN_ARISTA_ALEATORIOS_POR_DEFECTO ||
+			        Integer.valueOf(textFieldCantVertices.getText()) != MIN_VERTICES_ALEATORIOS_POR_DEFECTO ||
+			        Integer.valueOf(textFieldCantidadGrafos.getText()) != MIN_GRAFOS_ALEATORIOS_POR_DEFECTO){
+			    	 btnComparar.setEnabled(false);
+			        }
+		    }
 	}
 
 }
