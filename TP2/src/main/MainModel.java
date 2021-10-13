@@ -111,19 +111,16 @@ public class MainModel implements KeyListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 
-				int cantVertices = Integer.valueOf(textFieldCantVertices.getText());
-				int cantAristas = Integer.valueOf(textFieldCantidadAristas.getText());
-				int cantGrafos =  Integer.valueOf(textFieldCantidadGrafos.getText());
+				cantVertices = Integer.valueOf(textFieldCantVertices.getText());
+				cantAristas = Integer.valueOf(textFieldCantidadAristas.getText());
+				cantGrafos =  Integer.valueOf(textFieldCantidadGrafos.getText());
 				
 				ArrayList<Grafo> grafoKruscalBFS = crearGrafosCantSeleccionada(cantVertices, cantAristas, cantGrafos);
 				ArrayList<Grafo> grafoKruscalUionFind = crearGrafosCantSeleccionada(cantVertices, cantAristas, cantGrafos);
 
-				
-			long tiempoNanoSegundosKruskalBFS = calcularKruskalBFS(grafoKruscalBFS);
-	        long tiempoNanoSegundosKruskalUnionFind = calcularKruskalUnionFind(grafoKruscalUionFind);
-				    mostrarResultados(tiempoNanoSegundosKruskalBFS, tiempoNanoSegundosKruskalUnionFind);
-			
-				
+				long tiempoNanoSegundosKruskalBFS = calcularKruskalBFS(grafoKruscalBFS);
+				long tiempoNanoSegundosKruskalUnionFind = calcularKruskalUnionFind(grafoKruscalUionFind);
+			    mostrarResultados(tiempoNanoSegundosKruskalBFS, tiempoNanoSegundosKruskalUnionFind);			
 			}
 
 		});
