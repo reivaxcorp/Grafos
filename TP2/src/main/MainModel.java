@@ -104,6 +104,8 @@ public class MainModel implements KeyListener{
 				cantAristas = aristasRandom;
 				cantGrafos = grafosRandom;
 				
+				btnComparar.setEnabled(true);
+				lblLabelError.setText("");
 			}
 		});
 		btnComparar.addActionListener(new ActionListener() {
