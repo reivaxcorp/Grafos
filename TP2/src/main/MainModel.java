@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +45,8 @@ public class MainModel implements KeyListener{
 	private KruskalBFS kruskalBFS;
 	private KruskalUnionFind kruskalUnionFind;
 	private  Pattern pattern;
+	
+	public MainModel() {}
 	
 	public MainModel(
 			JTextField textFieldCantVertices,
@@ -117,11 +121,10 @@ public class MainModel implements KeyListener{
 				cantAristas = Integer.valueOf(textFieldCantidadAristas.getText());
 				cantGrafos =  Integer.valueOf(textFieldCantidadGrafos.getText());
 				
-				ArrayList<Grafo> grafoKruscalBFS = crearGrafosCantSeleccionada(cantVertices, cantAristas, cantGrafos);
-				ArrayList<Grafo> grafoKruscalUionFind = crearGrafosCantSeleccionada(cantVertices, cantAristas, cantGrafos);
+				ArrayList<ArrayList<Grafo>> grafos = crearGrafosCantSeleccionada(cantVertices, cantAristas, cantGrafos);
 
-				long tiempoNanoSegundosKruskalBFS = calcularKruskalBFS(grafoKruscalBFS);
-				long tiempoNanoSegundosKruskalUnionFind = calcularKruskalUnionFind(grafoKruscalUionFind);
+				long tiempoNanoSegundosKruskalBFS = calcularKruskalBFS(grafos.get(0), kruskalBFS);
+				long tiempoNanoSegundosKruskalUnionFind = calcularKruskalUnionFind(grafos.get(1), kruskalUnionFind);
 			    mostrarResultados(tiempoNanoSegundosKruskalBFS, tiempoNanoSegundosKruskalUnionFind);			
 			}
 
@@ -137,16 +140,36 @@ public class MainModel implements KeyListener{
 	   resultadoKruscalUnionFind.setText(String.valueOf(kruskalUnionFind) + " nanosegundos");
    }
    
-	private ArrayList<Grafo> crearGrafosCantSeleccionada(int cantVertices, int cantAristas, int cantGrafos) {
+	public ArrayList<ArrayList<Grafo>> crearGrafosCantSeleccionada(int cantVertices, int cantAristas, int cantGrafos) {
 	
-		ArrayList<Grafo> grafos = new ArrayList<Grafo>();
+		ArrayList<Grafo> grafoVersionUno = new ArrayList<Grafo>();
+		ArrayList<Grafo> grafoVersionDos = new ArrayList<Grafo>();
+		
+		ArrayList<ArrayList<Grafo>> grupoGrafos = new ArrayList<ArrayList<Grafo>>();
+		
 		for(int cant = 0; cant < cantGrafos; cant ++) {
-			grafos.add(UtilGrafos.obtenerGrafoAleatorio(cantVertices, cantAristas));
+			Grafo primerGrafo = new Grafo(cantVertices);
+			primerGrafo = UtilGrafos.obtenerGrafoAleatorio(cantVertices, cantAristas);
+
+			// debemos hacer una copia exacta de la instancia, para evitar el aliasing en la segunda version.
+			Grafo segundoGrafo = new Grafo(cantVertices);
+			HashMap<Integer, Set<Integer>> vecinos = UtilGrafos.dameVecinosVertice(primerGrafo);
+			for (Integer vertice: vecinos.keySet()) {
+				for(int ve: vecinos.get(vertice)) {
+					segundoGrafo.agregarArista(vertice, ve);
+					segundoGrafo.agregarPesoArista(vertice, ve, primerGrafo.obtenerPesoArista(vertice, ve));
+				}
+			}
+			
+			grafoVersionUno.add(primerGrafo);
+			grafoVersionDos.add(segundoGrafo);
 		}
-		return grafos;
+		grupoGrafos.add(grafoVersionUno);
+		grupoGrafos.add(grafoVersionDos);
+		return grupoGrafos;
 	}
 	
-	private long calcularKruskalBFS(ArrayList<Grafo> grafos) {
+	public long calcularKruskalBFS(ArrayList<Grafo> grafos, KruskalBFS kruskalBFS) {
 		
 		ArrayList<Long> tiempo = new ArrayList<Long>();
 		
@@ -165,7 +188,7 @@ public class MainModel implements KeyListener{
 		return tiempoTotal;
 	}
 	
-    private long calcularKruskalUnionFind(ArrayList<Grafo> grafos) {
+    public long calcularKruskalUnionFind(ArrayList<Grafo> grafos, KruskalUnionFind kruskalUnionFind) {
 		
 
 		ArrayList<Long> tiempo = new ArrayList<Long>();
